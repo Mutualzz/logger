@@ -52,16 +52,10 @@ const initLogger = (
                       }),
                   ]
                 : []),
-            ...(environment === "development"
-                ? [
-                      new transports.Console({
-                          format: combine(
-                              format.colorize({ all: true }),
-                              customFormat,
-                          ),
-                      }),
-                  ]
-                : []),
+
+            new transports.Console({
+                format: combine(format.colorize({ all: true }), customFormat),
+            }),
         ],
         exceptionHandlers: [
             ...(path
@@ -72,16 +66,10 @@ const initLogger = (
                       }),
                   ]
                 : []),
-            ...(environment === "development"
-                ? [
-                      new transports.Console({
-                          format: combine(
-                              format.colorize({ all: true }),
-                              customFormat,
-                          ),
-                      }),
-                  ]
-                : []),
+
+            new transports.Console({
+                format: combine(format.colorize({ all: true }), customFormat),
+            }),
         ],
         transports: [
             new transports.DailyRotateFile({
@@ -93,16 +81,9 @@ const initLogger = (
                 filename: `${path}/all-%DATE%.log`,
                 ...rotateOpts,
             }),
-            ...(environment === "development"
-                ? [
-                      new transports.Console({
-                          format: combine(
-                              format.colorize({ all: true }),
-                              customFormat,
-                          ),
-                      }),
-                  ]
-                : []),
+            new transports.Console({
+                format: combine(format.colorize({ all: true }), customFormat),
+            }),
         ],
     });
 
