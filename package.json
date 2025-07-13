@@ -1,0 +1,23 @@
+{
+    "dependencies": {
+        "lodash-es": "^4.17.21",
+        "moment": "^2.30.1",
+        "moment-timezone": "^0.6.0",
+        "winston": "^3.17.0",
+        "winston-daily-rotate-file": "^5.0.0"
+    },
+    "devDependencies": {
+        "bunchee": "^6.5.4"
+    },
+    "exports": {
+        ".": "./dist/index.js"
+    },
+    "name": "@mutualzz/logger",
+    "private": true,
+    "scripts": {
+        "build": "bunchee",
+        "check-types": "tsc --noEmit",
+        "dev": "bunchee --watch"
+    },
+    "version": "0.0.0"
+}
