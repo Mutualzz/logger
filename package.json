@@ -7,15 +7,15 @@
         "winston-daily-rotate-file": "^5.0.0"
     },
     "devDependencies": {
-        "bunchee": "^6.5.4"
+        "bunchee": "^6.6.0"
     },
     "exports": {
-        ".": "./dist/index.js"
+        ".": "./dist/index.mjs"
     },
     "name": "@mutualzz/logger",
     "private": true,
     "scripts": {
-        "build": "bunchee",
+        "build": "bun run check-types && bunchee",
         "check-types": "tsc --noEmit",
         "dev": "bunchee --watch"
     },
