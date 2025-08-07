@@ -1,4 +1,4 @@
-import capitalize from "lodash-es/capitalize";
+import { capitalize } from "lodash-es";
 import moment from "moment";
 import "moment-timezone";
 import { config, createLogger, format, transports } from "winston";

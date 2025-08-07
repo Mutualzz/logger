@@ -15,8 +15,8 @@
     "name": "@mutualzz/logger",
     "private": true,
     "scripts": {
-        "build": "pnpm check-types && bunchee",
-        "check-types": "tsc --noEmit",
+        "build": "pnpm typecheck && bunchee",
+        "typecheck": "tsc --noEmit",
         "dev": "bunchee --watch"
     },
     "version": "0.0.0"
