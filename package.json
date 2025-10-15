@@ -7,7 +7,7 @@
         "winston-daily-rotate-file": "^5.0.0"
     },
     "devDependencies": {
-        "bunchee": "^6.6.0"
+        "bunchee": "^6.6.2"
     },
     "exports": {
         ".": "./dist/index.mjs"
