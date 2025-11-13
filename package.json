@@ -3,13 +3,20 @@
         "bunchee": "^6.6.2"
     },
     "exports": {
-        ".": "./dist/index.mjs"
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs",
+            "types": "./dist/index.d.ts"
+        }
     },
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
     "name": "@mutualzz/logger",
     "private": true,
     "scripts": {
         "build": "pnpm typecheck && bunchee",
         "dev": "bunchee --watch",
         "typecheck": "tsc --noEmit"
-    }
+    },
+    "types": "./dist/index.d.ts"
 }
