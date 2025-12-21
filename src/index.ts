@@ -42,13 +42,29 @@ interface LoggerOptions {
     withLevelPrefix?: boolean;
 }
 
+function detectReactNative(): boolean {
+    // Reliable RN hint
+    if (typeof navigator !== "undefined" && navigator.product === "ReactNative")
+        return true;
+    // RN has no DOM
+    if (typeof window !== "undefined" && typeof document === "undefined")
+        return true;
+    // Fallback: RN global flag often present
+    return (
+        typeof global !== "undefined" &&
+        (global as any).__DEV__ !== undefined &&
+        typeof (global as any).document === "undefined"
+    );
+}
+
 export class Logger {
-    private tag: string;
+    private readonly tag: string;
     private level: LogLevel;
-    private transports: Transport[];
-    private withTimestamp: boolean;
-    private withLevelPrefix: boolean;
-    private isBrowser: boolean;
+    private readonly transports: Transport[];
+    private readonly withTimestamp: boolean;
+    private readonly withLevelPrefix: boolean;
+    private readonly isBrowser: boolean;
+    private readonly isReactNative: boolean;
 
     constructor({
         tag,
@@ -63,6 +79,11 @@ export class Logger {
         this.withTimestamp = withTimestamp;
         this.withLevelPrefix = withLevelPrefix;
         this.isBrowser = typeof window !== "undefined";
+        this.isReactNative = detectReactNative();
+        this.isBrowser =
+            !this.isReactNative &&
+            typeof window !== "undefined" &&
+            typeof document !== "undefined";
     }
 
     setLevel(level: LogLevel) {
