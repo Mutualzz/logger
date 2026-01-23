@@ -4,28 +4,44 @@
  * While we use this logger for production, it's recommended to use the provided logging methods.
  */
 /* eslint-disable no-console */
-type LogLevel = "debug" | "info" | "warn" | "error";
+type LogLevel =
+    | "debug"
+    | "trace"
+    | "info"
+    | "warn"
+    | "error"
+    | "fatal"
+    | "none";
 
 const LEVELS: Record<LogLevel, number> = {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
+    trace: 10,
+    debug: 20,
+    info: 30,
+    warn: 40,
+    error: 50,
+    fatal: 60,
+    none: 100,
 };
 
 const BROWSER_COLORS: Record<LogLevel, string> = {
+    trace: "#9E9E9E",
     debug: "#9E9E9E",
     info: "#2196F3",
     warn: "#FF9800",
     error: "#F44336",
+    fatal: "#B00020",
+    none: "#ffffff",
 };
 
 // Node.js colors (ANSI codes)
 const NODE_COLORS: Record<LogLevel, string> = {
+    trace: "\x1b[90m", // Gray
     debug: "\x1b[90m", // Gray
     info: "\x1b[36m", // Cyan
     warn: "\x1b[33m", // Yellow
     error: "\x1b[31m", // Red
+    fatal: "\x1b[35m", // Magenta
+    none: "\x1b[37m", // White
 };
 
 const RESET = "\x1b[0m";
@@ -94,6 +110,38 @@ export class Logger {
         this.transports.push(transport);
     }
 
+    debug(...args: any[]) {
+        this.log("debug", ...args);
+    }
+
+    info(...args: any[]) {
+        this.log("info", ...args);
+    }
+
+    warn(...args: any[]) {
+        this.log("warn", ...args);
+    }
+
+    error(...args: any[]) {
+        this.log("error", ...args);
+    }
+
+    fatal(...args: any[]) {
+        this.log("fatal", ...args);
+    }
+
+    trace(...args: any[]) {
+        this.log("trace", ...args);
+    }
+
+    has(level: LogLevel): boolean {
+        return this.shouldLog(level);
+    }
+
+    write(level: LogLevel, ...args: any[]) {
+        this.log(level, ...args);
+    }
+
     private shouldLog(level: LogLevel): boolean {
         return LEVELS[level] >= LEVELS[this.level];
     }
@@ -102,6 +150,8 @@ export class Logger {
         if (!this.shouldLog(level)) return;
 
         const timestamp = new Date().toISOString();
+        let lvl =
+            level === "fatal" ? "error" : level === "none" ? "info" : level;
         if (this.isBrowser) {
             const color = BROWSER_COLORS[level];
             let prefix = `%c[${this.tag}]`;
@@ -117,7 +167,7 @@ export class Logger {
                 styles.push(`color:#888; font-style:italic;`);
             }
 
-            console[level](prefix, ...styles, ...args);
+            console[lvl](prefix, ...styles, ...args);
         } else {
             const color = NODE_COLORS[level];
             let prefix = `${color}${BOLD}[${this.tag}]${RESET}`;
@@ -130,7 +180,7 @@ export class Logger {
                 prefix += ` ${DIM}${timestamp}${RESET}`;
             }
 
-            console[level](prefix, ...args);
+            console[lvl](prefix, ...args);
         }
 
         for (const transport of this.transports) {
@@ -140,18 +190,5 @@ export class Logger {
                 console.warn(`[Logger] Failed to execute transport:`, error);
             }
         }
-    }
-
-    debug(...args: any[]) {
-        this.log("debug", ...args);
-    }
-    info(...args: any[]) {
-        this.log("info", ...args);
-    }
-    warn(...args: any[]) {
-        this.log("warn", ...args);
-    }
-    error(...args: any[]) {
-        this.log("error", ...args);
     }
 }
