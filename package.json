@@ -1,6 +1,6 @@
 {
     "devDependencies": {
-        "bunchee": "^6.9.4"
+        "bunchee": "^6.10.0"
     },
     "exports": {
         ".": {
