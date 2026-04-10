@@ -26,6 +26,9 @@
         "noUnusedParameters": false,
         "noPropertyAccessFromIndexSignature": false,
 
-        "baseUrl": "./src"
-    }
+        "rootDir": "./src",
+        "types": ["node"]
+    },
+    "include": ["src/**/*"],
+    "exclude": ["dist", "dist/**", "**/dist/**"]
 }
