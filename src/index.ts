@@ -4,7 +4,7 @@
  * While we use this logger for production, it's recommended to use the provided logging methods.
  */
 /* eslint-disable no-console */
-type LogLevel =
+export type LogLevel =
     | "debug"
     | "trace"
     | "info"
