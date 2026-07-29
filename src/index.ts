@@ -150,7 +150,7 @@ export class Logger {
         if (!this.shouldLog(level)) return;
 
         const timestamp = new Date().toISOString();
-        let lvl =
+        const lvl =
             level === "fatal" ? "error" : level === "none" ? "info" : level;
         if (this.isBrowser) {
             const color = BROWSER_COLORS[level];

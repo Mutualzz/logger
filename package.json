@@ -1,6 +1,8 @@
 {
     "devDependencies": {
-        "bunchee": "^6.10.0"
+        "@mutualzz/eslint-config": "workspace:*",
+        "bunchee": "^6.10.0",
+        "eslint": "^10.8.0"
     },
     "exports": {
         ".": {
@@ -16,7 +18,8 @@
     "scripts": {
         "build": "pnpm typecheck && bunchee",
         "dev": "bunchee --watch",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src"
     },
     "types": "./dist/index.d.ts"
 }
